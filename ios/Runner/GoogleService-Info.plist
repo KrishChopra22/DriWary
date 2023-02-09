@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>107226254817-5ni3kc3qlij5ngc8pmb18on6889t15du.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.107226254817-5ni3kc3qlij5ngc8pmb18on6889t15du</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDR3n8XELKJletmQqbDeDVdW7BiiHzaYAE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>107226254817</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.exception</string>
+	<key>PROJECT_ID</key>
+	<string>exception-b2543</string>
+	<key>STORAGE_BUCKET</key>
+	<string>exception-b2543.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:107226254817:ios:fb5f54e375865f53bcd6a0</string>
+	<key>DATABASE_URL</key>
+	<string>https://exception-b2543-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
