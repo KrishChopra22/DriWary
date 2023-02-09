@@ -65,7 +65,7 @@ class SignupScreen extends StatelessWidget {
       ),
     );
   }
-//Signup
+
   signup(BuildContext context) async {
     print("Sign-Up");
 
