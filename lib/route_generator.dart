@@ -1,6 +1,6 @@
-import 'package:exception/screens/auth_screens/login_screen.dart';
+import 'package:exception/screens/auth_screens/phone_verify.dart';
 import 'package:exception/screens/auth_screens/signup_screen.dart';
-import 'package:exception/screens/auth_screens/verify.dart';
+import 'package:exception/screens/auth_screens/code_verify.dart';
 import 'package:exception/screens/camera_page.dart';
 import 'package:flutter/material.dart';
 
@@ -12,17 +12,17 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case 'login':
-        return MaterialPageRoute(builder: (_) => LoginScreen());
+      case 'verify':
+        return MaterialPageRoute(builder: (_) => PhoneVerify());
       case 'home':
         return MaterialPageRoute(builder: (_) => HomePage());
 
       case '/signup':
-        return MaterialPageRoute(builder: (_) => SignupScreen());
+        return MaterialPageRoute(builder: (_) => SignupScreen(args: args as String));
       case 'camera':
         return MaterialPageRoute(builder: (_) => CameraPage());
       case '/verifyOtp':
-        return MaterialPageRoute(builder: (_) => verifyOtp(args: args as String,));
+        return MaterialPageRoute(builder: (_) => verifyOtp(args: args as List<String>,));
 
       default:
         return _errorRoute();

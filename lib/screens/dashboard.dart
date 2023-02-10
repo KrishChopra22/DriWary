@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,7 +6,8 @@ import '../firebase/firebase_manager.dart';
 import 'camera_page.dart';
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({Key? key}) : super(key: key);
+  Dashboard({Key? key}) : super(key: key);
+  final FirebaseAuth auth = FirebaseManager.auth;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class Dashboard extends StatelessWidget {
                 ElevatedButton(
                     onPressed: () => signOut(context), child: Text('SignOut')),
                 Text("Hello"),
+                Text(auth.currentUser!.uid),
                 ElevatedButton(
                     onPressed: () => camera(context), child: Text('Camera')),
               ],
@@ -36,7 +39,7 @@ class Dashboard extends StatelessWidget {
   signOut(BuildContext context) {
     FirebaseManager.auth.signOut();
     NavigatorState state = Navigator.of(context);
-    state.pushNamedAndRemoveUntil('login', (Route route) => false);
+    state.pushNamedAndRemoveUntil('verify', (Route route) => false);
   }
 
   camera(BuildContext context) {

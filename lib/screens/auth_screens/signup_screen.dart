@@ -1,4 +1,3 @@
-import 'package:exception/screens/auth_screens/verify.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -8,16 +7,15 @@ import '../../dataclass/person.dart';
 import '../../firebase/firebase_manager.dart';
 
 class SignupScreen extends StatelessWidget {
-  SignupScreen({super.key});
+  final String args;
+  SignupScreen({super.key, required this.args});
   final FirebaseAuth auth = FirebaseManager.auth;
   final FirebaseDatabase database = FirebaseManager.database;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController codeController = TextEditingController();
-
-  String verificationIDReceived = "";
-  bool codeVisible = false;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
+  final TextEditingController genderController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,19 +36,56 @@ class SignupScreen extends StatelessWidget {
                       height: 30,
                     ),
 
-
-                    TextFormField(
+                    TextFormField (
                       controller: emailController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        labelText: "Email",
+                        labelText: "email",
                       ),
                     ),
                     const SizedBox(
                       height: 30,
                     ),
+
                     TextFormField(
+                      controller: nameController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        labelText: "name",
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+                    TextFormField (
+                      controller: dobController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        labelText: "dob",
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+                    TextFormField (
+                      controller: genderController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        labelText: "gender",
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+
+                    TextFormField (
                       controller: passwordController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -61,28 +96,8 @@ class SignupScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    ElevatedButton(onPressed: () => signup(context), child: Text('SignUp')),
-                    ElevatedButton(onPressed: () =>{Navigator.of(context).pushNamed('login')},
-                      child: Text('Login'),),
 
-                  //For Phone
-                    TextFormField(
-                      controller: phoneController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        labelText: "Phone",
-                      ),
-                      keyboardType: TextInputType.phone,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    ElevatedButton(onPressed: (){
-                        verifyNumber(context);
-                    } ,
-                      child: Text('Verify Number'),
-                    ),
+                    ElevatedButton(onPressed: () => signup(context), child: Text('SignUp')),
                   ],
                 ),
               )
@@ -110,7 +125,7 @@ class SignupScreen extends StatelessWidget {
     personJson['name'] = 'Name';
     personJson['uid'] = credentials.user!.uid;
     personJson['email'] = emailController.text;
-    personJson['phone'] = phoneController.text;
+    personJson['phone'] = args;
 
     person.fromJson(personJson);
     print("Person Object Created");
@@ -156,35 +171,5 @@ class SignupScreen extends StatelessWidget {
         timeInSecForIosWeb: 1,
       );
     }
-  }
-
-  verifyNumber(BuildContext context) {
-    NavigatorState state = Navigator.of(context);
-    auth.verifyPhoneNumber(
-        phoneNumber: phoneController.text,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await auth.signInWithCredential(credential).then((value) =>{
-            print("You are Logged in.")
-          });
-        },
-        verificationFailed: (FirebaseAuthException e){
-          print("Verification Failed");
-          print(e.message);
-        },
-        codeSent: (String verifictionID, int? resendToken){
-          print("Code Sent");
-          verificationIDReceived = verifictionID;
-          Fluttertoast.showToast(
-            msg: "OTP Sent",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-          );
-
-          print("Redirect to OTP Verification Page");
-          state.pushNamedAndRemoveUntil('/verifyOtp',arguments: verificationIDReceived, (Route route) => false);
-        },
-        codeAutoRetrievalTimeout: (String verificationID){}
-    );
   }
 }
