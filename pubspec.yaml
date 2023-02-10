@@ -43,6 +43,7 @@ dependencies:
   flutter_camera: ^0.1.1
   flutter_sms: ^2.3.3
   flutter_phone_direct_caller: ^2.1.1
+  permission_handler: ^10.2.0
 
 dev_dependencies:
   flutter_test:

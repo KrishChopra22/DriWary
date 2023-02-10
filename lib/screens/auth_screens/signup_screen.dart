@@ -122,7 +122,7 @@ class SignupScreen extends StatelessWidget {
     // Make object of dataclass and push on DB
     Person person = Person();
     Map<String, dynamic> personJson = {};
-    personJson['name'] = 'Name';
+    personJson['name'] = nameController.text;
     personJson['uid'] = credentials.user!.uid;
     personJson['email'] = emailController.text;
     personJson['phone'] = args;
