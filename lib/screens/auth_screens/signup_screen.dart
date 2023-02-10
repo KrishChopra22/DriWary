@@ -1,3 +1,4 @@
+import 'package:exception/screens/auth_screens/verify.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -77,9 +78,7 @@ class SignupScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    Visibility(
-                      visible: codeVisible,
-                      child: TextFormField(
+                    TextFormField(
                         controller: codeController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -87,21 +86,19 @@ class SignupScreen extends StatelessWidget {
                           labelText: "Code",
                         ),
                       ),
-                    ),
                     const SizedBox(
                       height: 30,
                     ),
                     ElevatedButton(onPressed: (){
-                      if(codeVisible){
-                        verifyCode(context);
-                      }
-                      else{
                         verifyNumber(context);
-                      }
                     } ,
-                      child: Text(codeVisible? 'Login' : 'Verify OTP'),
+                      child: Text('Verify Number'),
                     ),
-
+                    ElevatedButton(onPressed: (){
+                        verifyCode(context);
+                        },
+                      child: Text('Verify Code'),
+                    ),
 
                   ],
                 ),
@@ -179,6 +176,7 @@ class SignupScreen extends StatelessWidget {
   }
 
   verifyNumber(BuildContext context) {
+    NavigatorState state = Navigator.of(context);
     auth.verifyPhoneNumber(
         phoneNumber: phoneController.text,
         verificationCompleted: (PhoneAuthCredential credential) async {
@@ -187,24 +185,31 @@ class SignupScreen extends StatelessWidget {
           });
         },
         verificationFailed: (FirebaseAuthException e){
+          print("Verification Failed");
           print(e.message);
         },
         codeSent: (String verifictionID, int? resendToken){
+          print("Code Sent");
           verificationIDReceived = verifictionID;
-          codeVisible = true;
+          // codeVisible = true;
+          // print("Redirect to OTP Verification Page");
+          // state.pushNamedAndRemoveUntil('/verifyOtp', (Route route) => false);
         },
         codeAutoRetrievalTimeout: (String verificationID){
-
         }
     );
+
   }
 
   verifyCode(BuildContext context) async{
+
+    NavigatorState state = Navigator.of(context);
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationIDReceived,
         smsCode: codeController.text,
     );
     await auth.signInWithCredential(credential).then((value) {
+      state.pushNamedAndRemoveUntil('home', (Route route) => false);
       print("Logged in ");
     });
   }
