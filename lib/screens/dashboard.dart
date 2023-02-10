@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 import '../firebase/firebase_manager.dart';
 import 'camera_page.dart';
@@ -23,7 +24,7 @@ class Dashboard extends StatelessWidget {
                 Text("Hello"),
                 Text(auth.currentUser!.uid),
                 ElevatedButton(
-                    onPressed: () => camera(context), child: Text('Camera')),
+                    onPressed: () => call(context), child: Text('CAll')),
               ],
             ),
           ),
@@ -45,5 +46,9 @@ class Dashboard extends StatelessWidget {
   camera(BuildContext context) {
     NavigatorState state = Navigator.of(context);
     state.pushNamedAndRemoveUntil('camera', (Route route) => false);
+  }
+
+  call(BuildContext context){
+    FlutterPhoneDirectCaller.callNumber("+919425253909");
   }
 }
