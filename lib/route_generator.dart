@@ -1,6 +1,7 @@
 import 'package:exception/screens/auth_screens/login_screen.dart';
 import 'package:exception/screens/auth_screens/signup_screen.dart';
 import 'package:exception/screens/auth_screens/verify.dart';
+import 'package:exception/screens/camera_page.dart';
 import 'package:flutter/material.dart';
 
 import 'main.dart';
@@ -17,6 +18,8 @@ class RouteGenerator {
 
       case '/signup':
         return MaterialPageRoute(builder: (_) => SignupScreen());
+      case 'camera':
+        return MaterialPageRoute(builder: (_) => CameraPage());
       case '/verifyOtp':
         return MaterialPageRoute(builder: (_) => verifyOtp());
 
