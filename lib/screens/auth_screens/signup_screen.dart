@@ -12,6 +12,11 @@ class SignupScreen extends StatelessWidget {
   final FirebaseDatabase database = FirebaseManager.database;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController codeController = TextEditingController();
+
+  String verificationIDReceived = "";
+  bool codeVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +36,8 @@ class SignupScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
+
+
                     TextFormField(
                       controller: emailController,
                       decoration: InputDecoration(
@@ -55,7 +62,47 @@ class SignupScreen extends StatelessWidget {
                     ),
                     ElevatedButton(onPressed: () => signup(context), child: Text('SignUp')),
                     ElevatedButton(onPressed: () =>{Navigator.of(context).pushNamed('login')},
-                      child: Text('Login'),)
+                      child: Text('Login'),),
+
+                  //For Phone
+                    TextFormField(
+                      controller: phoneController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        labelText: "Phone",
+                      ),
+                      keyboardType: TextInputType.phone,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Visibility(
+                      visible: codeVisible,
+                      child: TextFormField(
+                        controller: codeController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          labelText: "Code",
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    ElevatedButton(onPressed: (){
+                      if(codeVisible){
+                        verifyCode(context);
+                      }
+                      else{
+                        verifyNumber(context);
+                      }
+                    } ,
+                      child: Text(codeVisible? 'Login' : 'Verify OTP'),
+                    ),
+
+
                   ],
                 ),
               )
@@ -83,6 +130,7 @@ class SignupScreen extends StatelessWidget {
     personJson['name'] = 'Name';
     personJson['uid'] = credentials.user!.uid;
     personJson['email'] = emailController.text;
+    personJson['phone'] = phoneController.text;
 
     person.fromJson(personJson);
     print("Person Object Created");
@@ -105,7 +153,6 @@ class SignupScreen extends StatelessWidget {
           timeInSecForIosWeb: 1,
         );
       } else if (e.code == 'email-already-in-use') {
-        state.pop();
         Fluttertoast.showToast(
           msg: "An account already exists for that email.",
           toastLength: Toast.LENGTH_SHORT,
@@ -122,7 +169,6 @@ class SignupScreen extends StatelessWidget {
       }
     } catch (e) {
       print(e.toString());
-      state.pop();
       Fluttertoast.showToast(
         msg: 'Something is Wrong',
         toastLength: Toast.LENGTH_SHORT,
@@ -130,5 +176,36 @@ class SignupScreen extends StatelessWidget {
         timeInSecForIosWeb: 1,
       );
     }
+  }
+
+  verifyNumber(BuildContext context) {
+    auth.verifyPhoneNumber(
+        phoneNumber: phoneController.text,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await auth.signInWithCredential(credential).then((value) =>{
+            print("You are Logged in.")
+          });
+        },
+        verificationFailed: (FirebaseAuthException e){
+          print(e.message);
+        },
+        codeSent: (String verifictionID, int? resendToken){
+          verificationIDReceived = verifictionID;
+          codeVisible = true;
+        },
+        codeAutoRetrievalTimeout: (String verificationID){
+
+        }
+    );
+  }
+
+  verifyCode(BuildContext context) async{
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationIDReceived,
+        smsCode: codeController.text,
+    );
+    await auth.signInWithCredential(credential).then((value) {
+      print("Logged in ");
+    });
   }
 }

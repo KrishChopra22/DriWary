@@ -10,10 +10,12 @@ final FirebaseDatabase database = FirebaseManager.database;
 class Person extends ChangeNotifier {
   late String name;
   late String email;
+  late String phone;
   late String uid;
 
   void fromJson(Map<String, dynamic> json) {
     name = json['name'];
+    phone = json['phone'];
     email = json['email'];
     uid = json['uid'];
   }
@@ -22,6 +24,7 @@ class Person extends ChangeNotifier {
       {
         'name': name,
         'email': email,
+        'phone': phone,
         'uid': uid,
       };
 }
