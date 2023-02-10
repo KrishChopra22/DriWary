@@ -18,7 +18,7 @@ class Dashboard extends StatelessWidget {
               children: [
                 ElevatedButton(
                     onPressed: () => signOut(context), child: Text('SignOut')),
-                Text("hello"),
+                Text("Hello"),
                 ElevatedButton(
                     onPressed: () => camera(context), child: Text('Camera')),
               ],

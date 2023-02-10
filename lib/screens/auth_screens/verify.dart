@@ -1,14 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../dataclass/person.dart';
 
-class verifyOtp extends StatelessWidget {
-  verifyOtp({Key? key}) : super(key: key);
+class verifyOtp extends StatefulWidget {
+  final String args;
+  verifyOtp({Key? key, required this.args}) : super(key: key);
 
+  @override
+  State<verifyOtp> createState() => _verifyOtpState();
+}
+
+class _verifyOtpState extends State<verifyOtp> {
   final TextEditingController codeController = TextEditingController();
 
-  String verificationIDReceived = "";
+  late String verificationIDReceived;
+
+  @override
+  void initState() {
+    verificationIDReceived = widget.args;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,20 +32,20 @@ class verifyOtp extends StatelessWidget {
             height: 200,
           ),
           TextFormField(
-              controller: codeController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                labelText: "Code",
-              ),
+            controller: codeController,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              labelText: "Code",
             ),
+          ),
           const SizedBox(
             height: 30,
           ),
           ElevatedButton(onPressed: (){
-              verifyCode(context);
-            } ,
-            child: Text('Verify OTP'),
+            verifyCode(context);
+          },
+            child: Text('Verify Code'),
           ),
         ],
       ),
@@ -48,7 +62,7 @@ class verifyOtp extends StatelessWidget {
     await auth.signInWithCredential(credential).then((value) {
       state.pushNamedAndRemoveUntil('home', (Route route) => false);
       print("Logged in");
-    });
-
+    }
+    );
   }
 }

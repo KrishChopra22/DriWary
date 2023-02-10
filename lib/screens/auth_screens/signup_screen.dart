@@ -78,28 +78,11 @@ class SignupScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    TextFormField(
-                        controller: codeController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5)),
-                          labelText: "Code",
-                        ),
-                      ),
-                    const SizedBox(
-                      height: 30,
-                    ),
                     ElevatedButton(onPressed: (){
                         verifyNumber(context);
                     } ,
                       child: Text('Verify Number'),
                     ),
-                    ElevatedButton(onPressed: (){
-                        verifyCode(context);
-                        },
-                      child: Text('Verify Code'),
-                    ),
-
                   ],
                 ),
               )
@@ -191,26 +174,17 @@ class SignupScreen extends StatelessWidget {
         codeSent: (String verifictionID, int? resendToken){
           print("Code Sent");
           verificationIDReceived = verifictionID;
-          // codeVisible = true;
-          // print("Redirect to OTP Verification Page");
-          // state.pushNamedAndRemoveUntil('/verifyOtp', (Route route) => false);
+          Fluttertoast.showToast(
+            msg: "OTP Sent",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+          );
+
+          print("Redirect to OTP Verification Page");
+          state.pushNamedAndRemoveUntil('/verifyOtp',arguments: verificationIDReceived, (Route route) => false);
         },
-        codeAutoRetrievalTimeout: (String verificationID){
-        }
+        codeAutoRetrievalTimeout: (String verificationID){}
     );
-
-  }
-
-  verifyCode(BuildContext context) async{
-
-    NavigatorState state = Navigator.of(context);
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationIDReceived,
-        smsCode: codeController.text,
-    );
-    await auth.signInWithCredential(credential).then((value) {
-      state.pushNamedAndRemoveUntil('home', (Route route) => false);
-      print("Logged in ");
-    });
   }
 }

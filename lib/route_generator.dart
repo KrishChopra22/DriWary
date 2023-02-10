@@ -9,6 +9,7 @@ import 'main.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    final args = settings.arguments;
 
     switch (settings.name) {
       case 'login':
@@ -21,7 +22,7 @@ class RouteGenerator {
       case 'camera':
         return MaterialPageRoute(builder: (_) => CameraPage());
       case '/verifyOtp':
-        return MaterialPageRoute(builder: (_) => verifyOtp());
+        return MaterialPageRoute(builder: (_) => verifyOtp(args: args as String,));
 
       default:
         return _errorRoute();
