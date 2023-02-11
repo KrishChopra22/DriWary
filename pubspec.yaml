@@ -49,6 +49,8 @@ dependencies:
   audioplayers: ^3.0.1
   quickalert: ^1.0.1
   gradient_borders: ^1.0.0
+  geolocator: ^9.0.2
+  geocoding: ^2.0.5
 
 
 dev_dependencies:
