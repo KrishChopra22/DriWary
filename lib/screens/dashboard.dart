@@ -1,7 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:exception/screens/DriveDetails.dart';
+import 'package:exception/screens/drive_mode.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_sms/flutter_sms.dart';
@@ -9,7 +9,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:quickalert/quickalert.dart';
 
 import '../firebase/firebase_manager.dart';
-import 'camera_page.dart';
 import 'emergency_contact.dart';
 
 String message = "This is a test message!";
@@ -29,38 +28,46 @@ class Dashboard extends StatelessWidget {
             child: Column(
               children: [
                 ElevatedButton(
-                    onPressed: () => signOut(context), child: Text('SignOut')),
-                Text("Hello"),
+                    onPressed: () => signOut(context),
+                    child: const Text('SignOut')),
+                const Text("Hello"),
                 Text(auth.currentUser!.uid),
                 ElevatedButton(
-                    onPressed: () => call(context), child: Text('Call')),
+                    onPressed: () => call(context), child: const Text('Call')),
                 ElevatedButton(
-                    onPressed: () { _sendSMS(message, recipients);}, child: Text('Location')),
+                    onPressed: () {
+                      _sendSMS(message, recipients);
+                    },
+                    child: const Text('Location')),
                 ElevatedButton(
-                    onPressed: () { playSound(context);}, child: Text('sound')),
+                    onPressed: () {
+                      playSound(context);
+                    },
+                    child: const Text('sound')),
                 ElevatedButton(
-                    onPressed: () => popup(context), child: Text('PopUP')),
+                    onPressed: () => popup(context),
+                    child: const Text('PopUP')),
                 ElevatedButton(
-                    onPressed: () => _sendSMS(message, recipients), child: Text('SMS')),
+                    onPressed: () => _sendSMS(message, recipients),
+                    child: const Text('SMS')),
                 FloatingActionButton(
                   onPressed: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => DriveDetails()));
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DriveDetails()));
                   },
                 ),
               ],
-
             ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CameraPage()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const DriveModePage()));
           },
         ));
-
-
   }
 
   signOut(BuildContext context) {
@@ -74,7 +81,7 @@ class Dashboard extends StatelessWidget {
     state.pushNamedAndRemoveUntil('camera', (Route route) => false);
   }
 
-  call(BuildContext context){
+  call(BuildContext context) {
     FlutterPhoneDirectCaller.callNumber("+916261934855");
   }
 
@@ -86,25 +93,23 @@ class Dashboard extends StatelessWidget {
   }
 
   void _sendSMS(String message, List<String> recipients) async {
-    String _result = await sendSMS(message: message, recipients: recipients, sendDirect: true)
+    String _result = await sendSMS(
+            message: message, recipients: recipients, sendDirect: true)
         .catchError((onError) {
       print(onError);
     });
     print(_result);
   }
 
-  void playSound(BuildContext context){
+  void playSound(BuildContext context) {
     final player = AudioPlayer();
     player.play(AssetSource('alarm.mpeg'));
-    QuickAlert.show(context: context,
+    QuickAlert.show(
+        context: context,
         type: QuickAlertType.warning,
-        onConfirmBtnTap: (){
+        onConfirmBtnTap: () {
           player.stop();
           Navigator.pop(context);
         });
-
-
   }
-
-
 }
