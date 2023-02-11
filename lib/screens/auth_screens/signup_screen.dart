@@ -32,13 +32,17 @@ class SignupScreen extends StatelessWidget {
                 Color(0xff13132d),
                 Color(0xff13132f),
                 Color(0xff1b1a3c),
-              ]
+              ],
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
             ),
           ),
           child: Column(
             children: [
               Container(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
                       height: 30,
@@ -253,7 +257,7 @@ class SignupScreen extends StatelessWidget {
                         signup(context);
                       },
                       child: Container(
-                        width: 80,
+                        width: 100,
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
