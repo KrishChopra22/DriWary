@@ -2,6 +2,7 @@
     package="com.example.exception">
     <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission-sdk-23 android:name="android.permission.READ_PHONE_STATE"/>
    <application
         android:label="exception"
         android:name="${applicationName}"
