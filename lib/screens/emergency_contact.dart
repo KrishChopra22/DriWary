@@ -76,24 +76,56 @@ popup(BuildContext context) {
   });
 }
 
+// ecPhonePush(BuildContext context) async {
+//   NavigatorState state = Navigator.of(context);
+//   print(auth.currentUser?.uid);
+//   final snapshot = await FirebaseManager.database.ref('Users/${auth.currentUser?.uid}').get();
+//   print(snapshot.value);
+//
+//   Map<String, dynamic> map = Map<String, dynamic>.from(snapshot.value as Map<dynamic, dynamic>);
+//   print(map);
+//   Person person;
+//   // person = Person.fromJson(map);
+//   // print(person);
+//   List<String>? exList= [ecPhone1Controller.text,ecPhone2Controller.text];
+//   print(exList);
+//
+//   map['emergencyContact'] = exList;
+//   print(map);
+//   print(auth.currentUser?.uid);
+//
+//   await database.ref('Users/${auth.currentUser?.uid}').update(map);
+//   print("Updated in DB");
+// }
+
 ecPhonePush(BuildContext context) async {
   NavigatorState state = Navigator.of(context);
-  print(auth.currentUser?.uid);
-  final snapshot = await FirebaseManager.database.ref('Users/${auth.currentUser?.uid}').get();
-  print(snapshot.value);
+  String u = auth.currentUser!.uid;
 
-  Map<String, dynamic> map = Map<String, dynamic>.from(snapshot.value as Map<dynamic, dynamic>);
-  print(map);
+  if (FirebaseManager.auth.currentUser != null) {
+    final snapshot = await FirebaseManager.database
+        .ref('Users/${FirebaseManager.auth.currentUser!.uid}')
+        .get();
+    print(snapshot.value);
+    print("User Exists.");
+    if (!snapshot.exists) {
+      print("NULL");
+    }
+  }
+  final snapshot = await FirebaseManager.database.ref('Users/${u}/emergencyContact').get();
+  print(snapshot.key);
+
+  Map<String, dynamic> map = Map<String, dynamic>.from(snapshot.value as Map<dynamic,dynamic>);
+  print(map[u]);
   Person person;
   // person = Person.fromJson(map);
   // print(person);
   List<String>? exList= [ecPhone1Controller.text,ecPhone2Controller.text];
   print(exList);
 
-  map['emergencyContact'] = exList;
+  map = exList as Map<String, dynamic>;
   print(map);
-  print(auth.currentUser?.uid);
 
-  await database.ref('Users/${auth.currentUser?.uid}').update(map);
+  // await database.ref('Users/${FirebaseManager.auth.currentUser!.uid}/emergencyContact').update(map);
   print("Updated in DB");
 }

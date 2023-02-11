@@ -18,6 +18,8 @@ class SignupScreen extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
+  final TextEditingController ecPhone1Controller = TextEditingController();
+  final TextEditingController ecPhone2Controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -249,6 +251,79 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField(
+                        style: TextStyle(color: Colors.white),
+                        cursorColor: Colors.white,
+                        controller: ecPhone1Controller,
+                        decoration: InputDecoration(
+                          border:  GradientOutlineInputBorder(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white,
+                                Color(0xff13132d),
+                                Color(0xff1b1a3c),
+                                Color(0xff13132d),
+                                Colors.white,
+                              ],
+                            ),
+                            width: 5,
+                          ),
+                          labelText: "Emergency Contact ",
+                          labelStyle: TextStyle(color: Colors.white),
+                          focusedBorder: GradientOutlineInputBorder(
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff13132d),
+                                    Colors.white,
+                                    Color(0xff13132d),
+                                  ]
+                              ),
+                              width: 5
+                          ),
+                          hintText: "Name",
+                          hintStyle: TextStyle(color: Colors.white70),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField(
+                        style: TextStyle(color: Colors.white),
+                        cursorColor: Colors.white,
+                        controller: ecPhone2Controller,
+                        decoration: InputDecoration(
+                          border:  GradientOutlineInputBorder(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white,
+                                Color(0xff13132d),
+                                Color(0xff1b1a3c),
+                                Color(0xff13132d),
+                                Colors.white,
+                              ],
+                            ),
+                            width: 5,
+                          ),
+                          labelText: "Emergency Contact ",
+                          labelStyle: TextStyle(color: Colors.white),
+                          focusedBorder: GradientOutlineInputBorder(
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff13132d),
+                                    Colors.white,
+                                    Color(0xff13132d),
+                                  ]
+                              ),
+                              width: 5
+                          ),
+                          hintText: "Name",
+                          hintStyle: TextStyle(color: Colors.white70),
+                        ),
+                      ),
+                    ),
                     const SizedBox(
                       height: 30,
                     ),
@@ -297,13 +372,16 @@ class SignupScreen extends StatelessWidget {
         email: emailController.text,
         password: passwordController.text,
       );
+
+      List<String>? ecList= [ecPhone1Controller.text,ecPhone2Controller.text];
       // Make object of dataclass and push on DB
       Person person = Person();
       Map<String, dynamic> personJson = {};
-      personJson['name'] = 'Name';
+      personJson['name'] = nameController.text;
       personJson['uid'] = credentials.user!.uid;
       personJson['email'] = emailController.text;
       personJson['phone'] = args;
+      personJson['emergencyContact'] = ecList;
 
       person.fromJson(personJson);
       print("Person Object Created");
