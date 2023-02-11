@@ -2,6 +2,7 @@ import 'package:exception/screens/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'firebase/firebase_manager.dart';
 import 'route_generator.dart';
 import 'firebase/firebase_options.dart';
@@ -9,7 +10,25 @@ import 'firebase/firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await checkUser();
   runApp(MyApp());
+}
+
+
+Future<void> checkUser() async {
+  if (FirebaseManager.auth.currentUser != null) {
+    final snapshot = await FirebaseManager.database
+        .ref('Users/${FirebaseManager.auth.currentUser!.uid}')
+        .get();
+    print(snapshot.value);
+    if (!snapshot.exists) {
+      await FirebaseManager.auth.signOut();
+      Fluttertoast.showToast(
+          msg: "^_^ You Got Deleted ^_^",
+          toastLength: Toast.LENGTH_LONG
+      );
+    }
+  }
 }
 
 class MyApp extends StatelessWidget {

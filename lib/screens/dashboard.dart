@@ -1,4 +1,3 @@
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +9,7 @@ import 'package:quickalert/quickalert.dart';
 
 import '../firebase/firebase_manager.dart';
 import 'camera_page.dart';
+import 'emergency_contact.dart';
 
 String message = "This is a test message!";
 List<String> recipients = ["+919425253909", "8720068368"];
@@ -18,12 +18,10 @@ class Dashboard extends StatelessWidget {
   Dashboard({Key? key}) : super(key: key);
   final FirebaseAuth auth = FirebaseManager.auth;
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.all(100.0),
           child: Center(
@@ -39,6 +37,10 @@ class Dashboard extends StatelessWidget {
                     onPressed: () { _sendSMS(message, recipients);}, child: Text('Location')),
                 ElevatedButton(
                     onPressed: () { playSound(context);}, child: Text('sound')),
+                ElevatedButton(
+                    onPressed: () => popup(context), child: Text('PopUP')),
+                ElevatedButton(
+                    onPressed: () => _sendSMS(message, recipients), child: Text('SMS')),
               ],
 
             ),
@@ -50,7 +52,7 @@ class Dashboard extends StatelessWidget {
                 context, MaterialPageRoute(builder: (context) => CameraPage()));
           },
         ));
-    
+
 
   }
 
@@ -86,7 +88,7 @@ class Dashboard extends StatelessWidget {
 
   void playSound(BuildContext context){
     final player = AudioPlayer();
-    player.play(AssetSource('myalarm.mp3'));
+    player.play(AssetSource('alarm.mpeg'));
     QuickAlert.show(context: context,
         type: QuickAlertType.warning,
         onConfirmBtnTap: (){
@@ -97,6 +99,5 @@ class Dashboard extends StatelessWidget {
 
   }
 
-   
 
 }

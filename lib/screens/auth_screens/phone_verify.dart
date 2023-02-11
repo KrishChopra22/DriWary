@@ -53,17 +53,24 @@ class PhoneVerify extends StatelessWidget {
   verifyNumber(BuildContext context) {
     NavigatorState state = Navigator.of(context);
 
+    AuthUtils.showLoadingDialog(context);
     auth.verifyPhoneNumber(
         phoneNumber: phoneController.text,
         verificationCompleted: (PhoneAuthCredential credential) async {
-          AuthUtils.showLoadingDialog(context);
           await auth.signInWithCredential(credential).then((value) =>{
             print("You are Logged in.")
           });
         },
         verificationFailed: (FirebaseAuthException e){
           print("Verification Failed");
+          Fluttertoast.showToast(
+            msg: "Verification Failed",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+          );
           print(e.message);
+          state.pop();
         },
         codeSent: (String verifictionID, int? resendToken){
           print("Code Sent");

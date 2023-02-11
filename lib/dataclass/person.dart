@@ -7,17 +7,34 @@ import '../firebase/firebase_manager.dart';
 final FirebaseAuth auth = FirebaseManager.auth;
 final FirebaseDatabase database = FirebaseManager.database;
 
-class Person extends ChangeNotifier {
+class Person{
   late String name;
   late String email;
   late String phone;
   late String uid;
+  late List<String>? emergencyContact;
+  // Person(
+  //     {
+  //       required this.name,
+  //       required this.email,
+  //       required this.phone,
+  //       required this.uid,
+  //       this.emergencyContact,
+  //     }
+  //     );
 
-  void fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    phone = json['phone'];
-    email = json['email'];
-    uid = json['uid'];
+  void fromJson(Map<String?, dynamic> json) {
+     // return Person(
+     //   name : json['name'],
+     //   email : json['email'],
+     //   phone : json['phone'],
+     //   uid : json['uid'],
+     // );
+     name = json['name'];
+     phone = json['phone'];
+     email = json['email'];
+     uid = json['uid'];
+     emergencyContact = json['emergencyContact'];
   }
 
   Map<String, dynamic> toJson() =>
@@ -26,5 +43,13 @@ class Person extends ChangeNotifier {
         'email': email,
         'phone': phone,
         'uid': uid,
+        'emergencyContact' : emergencyContact,
       };
+
+  Future<void> addGroup(Person p) async {
+    p.emergencyContact?.add(this as String);
+    await database.ref('Users/${auth.currentUser?.uid}').update(toJson());
+    print("User Upated");
+  }
+
 }
