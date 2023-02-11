@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:exception/screens/DriveDetails.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,12 @@ class Dashboard extends StatelessWidget {
                     onPressed: () => popup(context), child: Text('PopUP')),
                 ElevatedButton(
                     onPressed: () => _sendSMS(message, recipients), child: Text('SMS')),
+                FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => DriveDetails()));
+                  },
+                ),
               ],
 
             ),
