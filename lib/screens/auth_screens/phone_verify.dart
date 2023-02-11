@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../dataclass/person.dart';
+import '../../utils/auth_utils.dart';
 
 class PhoneVerify extends StatelessWidget {
   PhoneVerify({Key? key}) : super(key: key);
@@ -55,6 +56,7 @@ class PhoneVerify extends StatelessWidget {
     auth.verifyPhoneNumber(
         phoneNumber: phoneController.text,
         verificationCompleted: (PhoneAuthCredential credential) async {
+          AuthUtils.showLoadingDialog(context);
           await auth.signInWithCredential(credential).then((value) =>{
             print("You are Logged in.")
           });

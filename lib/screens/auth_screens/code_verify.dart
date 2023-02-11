@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../dataclass/person.dart';
+import '../../utils/auth_utils.dart';
 
 class verifyOtp extends StatefulWidget {
   final List<String> args;
@@ -60,6 +61,7 @@ class _verifyOtpState extends State<verifyOtp> {
       verificationId: verificationIDReceived,
       smsCode: codeController.text,
     );
+    AuthUtils.showLoadingDialog(context);
     await auth.signInWithCredential(credential).then((value) {
         print("Logged in");
       },

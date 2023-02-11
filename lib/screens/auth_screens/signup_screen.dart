@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../dataclass/person.dart';
 import '../../firebase/firebase_manager.dart';
+import '../../utils/auth_utils.dart';
 
 class SignupScreen extends StatelessWidget {
   final String args;
@@ -130,6 +131,7 @@ class SignupScreen extends StatelessWidget {
     person.fromJson(personJson);
     print("Person Object Created");
     //Push on DB
+    AuthUtils.showLoadingDialog(context);
     await database.ref('Users/${person.uid}').set(person.toJson());
     print("Pushed in DB");
 
