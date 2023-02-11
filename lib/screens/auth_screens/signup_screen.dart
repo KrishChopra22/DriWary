@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 
 import '../../dataclass/person.dart';
 import '../../firebase/firebase_manager.dart';
@@ -30,55 +31,167 @@ class SignupScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(
-                      height: 300,
+                      height: 30,
                     ),
-                    Text('SignUp'),
+                    Text('SignUp',style: TextStyle(color: Colors.white,fontSize: 28),),
                     const SizedBox(
                       height: 30,
                     ),
 
-                    TextFormField (
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        labelText: "email",
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField (
+                        style: TextStyle(color: Colors.white),
+                        keyboardType: TextInputType.emailAddress,
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          border:  GradientOutlineInputBorder(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white,
+                                Color(0xff13132d),
+                                Color(0xff1b1a3c),
+                                Color(0xff13132d),
+                                Colors.white,
+                              ],
+                            ),
+                            width: 5,
+                          ),
+                          labelText: "Email",
+                          labelStyle: TextStyle(color: Colors.white),
+                          focusedBorder: GradientOutlineInputBorder(
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff13132d),
+                                    Colors.white,
+                                    Color(0xff13132d),
+                                  ]
+                              ),
+                              width: 5
+                          ),
+                          hintText: "Email",
+                          hintStyle: TextStyle(color: Colors.white70),
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 30,
                     ),
 
-                    TextFormField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        labelText: "name",
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField(
+                        style: TextStyle(color: Colors.white),
+                        cursorColor: Colors.white,
+                        controller: nameController,
+                        decoration: InputDecoration(
+                          border:  GradientOutlineInputBorder(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white,
+                                Color(0xff13132d),
+                                Color(0xff1b1a3c),
+                                Color(0xff13132d),
+                                Colors.white,
+                              ],
+                            ),
+                            width: 5,
+                          ),
+                          labelText: "name",
+                          labelStyle: TextStyle(color: Colors.white),
+                          focusedBorder: GradientOutlineInputBorder(
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff13132d),
+                                    Colors.white,
+                                    Color(0xff13132d),
+                                  ]
+                              ),
+                              width: 5
+                          ),
+                          hintText: "Name",
+                          hintStyle: TextStyle(color: Colors.white70),
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 30,
                     ),
 
-                    TextFormField (
-                      controller: dobController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        labelText: "dob",
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField (
+                        style: TextStyle(color: Colors.white),
+                        cursorColor: Colors.white,
+                        controller: dobController,
+                        decoration: InputDecoration(
+                          border:  GradientOutlineInputBorder(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white,
+                                Color(0xff13132d),
+                                Color(0xff1b1a3c),
+                                Color(0xff13132d),
+                                Colors.white,
+                              ],
+                            ),
+                            width: 5,
+                          ),
+                          labelText: "DOB",
+                          labelStyle: TextStyle(color: Colors.white),
+                          focusedBorder: GradientOutlineInputBorder(
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff13132d),
+                                    Colors.white,
+                                    Color(0xff13132d),
+                                  ]
+                              ),
+                              width: 5
+                          ),
+                          hintText: "DOB",
+                          hintStyle: TextStyle(color: Colors.white70),
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 30,
                     ),
 
-                    TextFormField (
-                      controller: genderController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        labelText: "gender",
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField (
+                        style: TextStyle(color: Colors.white),
+                        cursorColor: Colors.white,
+                        controller: genderController,
+                        decoration: InputDecoration(
+                          border:  GradientOutlineInputBorder(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white,
+                                Color(0xff13132d),
+                                Color(0xff1b1a3c),
+                                Color(0xff13132d),
+                                Colors.white,
+                              ],
+                            ),
+                            width: 5,
+                          ),
+                          labelText: "Gender",
+                          labelStyle: TextStyle(color: Colors.white),
+                          focusedBorder: GradientOutlineInputBorder(
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff13132d),
+                                    Colors.white,
+                                    Color(0xff13132d),
+                                  ]
+                              ),
+                              width: 5
+                          ),
+                          hintText: "Gender",
+                          hintStyle: TextStyle(color: Colors.white70),
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -86,19 +199,68 @@ class SignupScreen extends StatelessWidget {
                     ),
 
 
-                    TextFormField (
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        labelText: "Password",
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField (
+                        style: TextStyle(color: Colors.white),
+                        cursorColor: Colors.white,
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          border:  GradientOutlineInputBorder(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white,
+                                Color(0xff13132d),
+                                Color(0xff1b1a3c),
+                                Color(0xff13132d),
+                                Colors.white,
+                              ],
+                            ),
+                            width: 5,
+                          ),
+                          labelText: "Password",
+                          labelStyle: TextStyle(color: Colors.white),
+                          focusedBorder: GradientOutlineInputBorder(
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff13132d),
+                                    Colors.white,
+                                    Color(0xff13132d),
+                                  ]
+                              ),
+                              width: 5
+                          ),
+                          hintText: "Password",
+                          hintStyle: TextStyle(color: Colors.white70),
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 30,
                     ),
+                    InkWell(
+                      onTap: (){
+                        signup(context);
+                      },
+                      child: Container(
+                        width: 80,
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Color(0xff13132d),
+                            border: GradientBoxBorder(
+                                gradient:LinearGradient(
+                                    colors: [
+                                      Color(0xff13132d),
+                                      Colors.white
+                                    ]
+                                )
+                            )
+                        ),
+                        child: Text('SignUp',style: TextStyle(color: Colors.white,fontSize: 18),textAlign: TextAlign.center,),
+                      ),
+                    ),
 
-                    ElevatedButton(onPressed: () => signup(context), child: Text('SignUp')),
                   ],
                 ),
               )
@@ -150,6 +312,8 @@ class SignupScreen extends StatelessWidget {
       print('Error Found');
       if (e.code == 'weak-password') {
         Fluttertoast.showToast(
+          backgroundColor: Colors.white,
+          textColor: Color(0xff13132d),
           msg: "The password provided is too weak.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
@@ -157,6 +321,8 @@ class SignupScreen extends StatelessWidget {
         );
       } else if (e.code == 'email-already-in-use') {
         Fluttertoast.showToast(
+          backgroundColor: Colors.white,
+          textColor: Color(0xff13132d),
           msg: "An account already exists for that email.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
@@ -164,6 +330,8 @@ class SignupScreen extends StatelessWidget {
         );
       } else {
         Fluttertoast.showToast(
+          backgroundColor: Colors.white,
+          textColor: Color(0xff13132d),
           msg: "Invalid details",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
@@ -173,6 +341,8 @@ class SignupScreen extends StatelessWidget {
     } catch (e) {
       print(e.toString());
       Fluttertoast.showToast(
+        backgroundColor: Colors.white,
+        textColor: Color(0xff13132d),
         msg: 'Something is Wrong',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
