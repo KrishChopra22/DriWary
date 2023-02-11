@@ -285,69 +285,56 @@ class SignupScreen extends StatelessWidget {
     );
   }
 
+
   signup(BuildContext context) async {
     print("Sign-Up");
 
     NavigatorState state = Navigator.of(context);
     try{
 
-    // Make User from the inbuilt func of Firebase
-    final credentials = await auth.createUserWithEmailAndPassword(
-      email: emailController.text,
-      password: passwordController.text,
-    );
-    print("Args");
-    print(args);
-    print(credentials.user?.uid);
+      // Make User from the inbuilt func of Firebase
+      final credentials = await auth.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      // Make object of dataclass and push on DB
+      Person person = Person();
+      Map<String, dynamic> personJson = {};
+      personJson['name'] = 'Name';
+      personJson['uid'] = credentials.user!.uid;
+      personJson['email'] = emailController.text;
+      personJson['phone'] = args;
 
-    // Make object of dataclass and push on DB
-    Person person = Person();
-    Map<String, dynamic> personJson = {};
-    personJson['name'] = nameController.text;
-    personJson['uid'] = credentials.user?.uid??"";
-    personJson['email'] = emailController.text;
-    personJson['phone'] = args;
-    personJson['emergencyContact'] = ['0'];
+      person.fromJson(personJson);
+      print("Person Object Created");
 
-    print(personJson['phone']);
-    person.fromJson(personJson);
-    print("Person Object Created");
-    //Push on DB
-    AuthUtils.showLoadingDialog(context);
-    await database.ref('Users/${person.uid}').set(person.toJson());
-    print("Pushed in DB");
+      //Push on DB
+      await database.ref('Users/${person.uid}').set(person.toJson());
+      print("Pushed in DB");
 
-    //Goto Home
-    state.pushNamedAndRemoveUntil('home', (Route route) => false);
-    print("Redirected to HomePage");
+      //Goto Home
+      state.pushNamedAndRemoveUntil('home', (Route route) => false);
+      print("Redirected to HomePage");
 
     }
     on FirebaseAuthException catch (e) {
       print('Error Found');
       if (e.code == 'weak-password') {
         Fluttertoast.showToast(
-          backgroundColor: Colors.white,
-          textColor: Color(0xff13132d),
           msg: "The password provided is too weak.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
         );
-      }
-      else if (e.code == 'email-already-in-use') {
+      } else if (e.code == 'email-already-in-use') {
         Fluttertoast.showToast(
-          backgroundColor: Colors.white,
-          textColor: Color(0xff13132d),
           msg: "An account already exists for that email.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
         );
-      }
-      else {
+      } else {
         Fluttertoast.showToast(
-          backgroundColor: Colors.white,
-          textColor: Color(0xff13132d),
           msg: "Invalid details",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
@@ -357,8 +344,6 @@ class SignupScreen extends StatelessWidget {
     } catch (e) {
       print(e.toString());
       Fluttertoast.showToast(
-        backgroundColor: Colors.white,
-        textColor: Color(0xff13132d),
         msg: 'Something is Wrong',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
@@ -366,4 +351,85 @@ class SignupScreen extends StatelessWidget {
       );
     }
   }
+  // signup(BuildContext context) async {
+  //   print("Sign-Up");
+  //
+  //   NavigatorState state = Navigator.of(context);
+  //   try{
+  //
+  //   // Make User from the inbuilt func of Firebase
+  //   final credentials = await auth.createUserWithEmailAndPassword(
+  //     email: emailController.text,
+  //     password: passwordController.text,
+  //   );
+  //   print("Args");
+  //   print(args);
+  //   print(credentials.user?.uid);
+  //
+  //   // Make object of dataclass and push on DB
+  //   Person person = Person();
+  //   Map<String, dynamic> personJson = {};
+  //   personJson['name'] = nameController.text;
+  //   personJson['uid'] = credentials.user?.uid??"";
+  //   personJson['email'] = emailController.text;
+  //   personJson['phone'] = args;
+  //   personJson['emergencyContact'] = ['0'];
+  //
+  //   print(personJson['phone']);
+  //   person.fromJson(personJson);
+  //   print("Person Object Created");
+  //   //Push on DB
+  //   AuthUtils.showLoadingDialog(context);
+  //   await database.ref('Users/${person.uid}').set(person.toJson());
+  //   print("Pushed in DB");
+  //
+  //   //Goto Home
+  //   state.pushNamedAndRemoveUntil('home', (Route route) => false);
+  //   print("Redirected to HomePage");
+  //
+  //   }
+  //   on FirebaseAuthException catch (e) {
+  //     print('Error Found');
+  //     if (e.code == 'weak-password') {
+  //       Fluttertoast.showToast(
+  //         backgroundColor: Colors.white,
+  //         textColor: Color(0xff13132d),
+  //         msg: "The password provided is too weak.",
+  //         toastLength: Toast.LENGTH_SHORT,
+  //         gravity: ToastGravity.BOTTOM,
+  //         timeInSecForIosWeb: 1,
+  //       );
+  //     }
+  //     else if (e.code == 'email-already-in-use') {
+  //       Fluttertoast.showToast(
+  //         backgroundColor: Colors.white,
+  //         textColor: Color(0xff13132d),
+  //         msg: "An account already exists for that email.",
+  //         toastLength: Toast.LENGTH_SHORT,
+  //         gravity: ToastGravity.BOTTOM,
+  //         timeInSecForIosWeb: 1,
+  //       );
+  //     }
+  //     else {
+  //       Fluttertoast.showToast(
+  //         backgroundColor: Colors.white,
+  //         textColor: Color(0xff13132d),
+  //         msg: "Invalid details",
+  //         toastLength: Toast.LENGTH_SHORT,
+  //         gravity: ToastGravity.BOTTOM,
+  //         timeInSecForIosWeb: 1,
+  //       );
+  //     }
+  //   } catch (e) {
+  //     print(e.toString());
+  //     Fluttertoast.showToast(
+  //       backgroundColor: Colors.white,
+  //       textColor: Color(0xff13132d),
+  //       msg: 'Something is Wrong',
+  //       toastLength: Toast.LENGTH_SHORT,
+  //       gravity: ToastGravity.BOTTOM,
+  //       timeInSecForIosWeb: 1,
+  //     );
+  //   }
+  // }
 }
