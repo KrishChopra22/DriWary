@@ -8,12 +8,14 @@ import 'package:permission_handler/permission_handler.dart';
 import '../firebase/firebase_manager.dart';
 import 'camera_page.dart';
 
+String message = "This is a test message!";
+List<String> recipients = ["+919425253909", "8720068368"];
+
 class Dashboard extends StatelessWidget {
   Dashboard({Key? key}) : super(key: key);
   final FirebaseAuth auth = FirebaseManager.auth;
 
-  String message = "This is a test message!";
-  List<String> recipents = ["+919425253909"];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class Dashboard extends StatelessWidget {
                 ElevatedButton(
                     onPressed: () => call(context), child: Text('Call')),
                 ElevatedButton(
-                    onPressed: () => location(context), child: Text('Location')),
+                    onPressed: () { _sendSMS(message, recipients);}, child: Text('Location')),
               ],
             ),
           ),
@@ -63,11 +65,11 @@ class Dashboard extends StatelessWidget {
     print("LOC");
     await Permission.location.serviceStatus.isEnabled;
     print(Permission.location.serviceStatus.isEnabled);
-    _sendSMS(message, recipents);
+    _sendSMS(message, recipients);
   }
 
-  void _sendSMS(String message, List<String> recipents) async {
-    String _result = await sendSMS(message: message, recipients: recipents,sendDirect: true)
+  void _sendSMS(String message, List<String> recipients) async {
+    String _result = await sendSMS(message: message, recipients: recipients, sendDirect: true)
         .catchError((onError) {
       print(onError);
     });
