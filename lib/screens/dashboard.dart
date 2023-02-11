@@ -21,11 +21,31 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('Dashboard',style: TextStyle(
+            color: Colors.white,fontSize: 24,fontWeight: FontWeight.w600),),
+        elevation: 0,
+        backgroundColor: Color(0xff14122a),
+      ),
+        backgroundColor: Color(0xff14122a),
         body: Padding(
           padding: const EdgeInsets.all(100.0),
-          child: Center(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xff14122a),
+                  Color(0xff13132d),
+                  Color(0xff13132f),
+                  Color(0xff1b1a3c),
+                ],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+              )
+            ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ElevatedButton(
                     onPressed: () => signOut(context),
