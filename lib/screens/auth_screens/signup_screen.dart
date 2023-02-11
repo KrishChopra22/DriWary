@@ -329,7 +329,8 @@ class SignupScreen extends StatelessWidget {
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
         );
-      } else if (e.code == 'email-already-in-use') {
+      }
+      else if (e.code == 'email-already-in-use') {
         Fluttertoast.showToast(
           backgroundColor: Colors.white,
           textColor: Color(0xff13132d),
@@ -338,7 +339,8 @@ class SignupScreen extends StatelessWidget {
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
         );
-      } else {
+      }
+      else {
         Fluttertoast.showToast(
           backgroundColor: Colors.white,
           textColor: Color(0xff13132d),

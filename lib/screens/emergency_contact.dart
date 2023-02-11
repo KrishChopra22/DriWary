@@ -79,7 +79,7 @@ popup(BuildContext context) {
 ecPhonePush(BuildContext context) async {
   NavigatorState state = Navigator.of(context);
   print(auth.currentUser?.uid);
-  final snapshot = await FirebaseManager.database.ref('Users').get();
+  final snapshot = await FirebaseManager.database.ref('Users/${auth.currentUser?.uid}').get();
   print(snapshot.value);
 
   Map<String, dynamic> map = Map<String, dynamic>.from(snapshot.value as Map<dynamic, dynamic>);
@@ -92,6 +92,7 @@ ecPhonePush(BuildContext context) async {
 
   map['emergencyContact'] = exList;
   print(map);
+  print(auth.currentUser?.uid);
 
   await database.ref('Users/${auth.currentUser?.uid}').update(map);
   print("Updated in DB");
