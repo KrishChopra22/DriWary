@@ -103,10 +103,10 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
         }
 
         print(face.smilingProbability);
-        if ((0.03 < face.smilingProbability! &&
-                face.smilingProbability! < 0.2) ||
-            (face.leftEyeOpenProbability! < 0.85 &&
-                face.rightEyeOpenProbability! < 0.85)) {
+        if ((0.02 < face.smilingProbability! &&
+                face.smilingProbability! < 0.2) &&
+            (face.leftEyeOpenProbability! < 0.86 &&
+                face.rightEyeOpenProbability! < 0.86)) {
           print("\n........YAWNING........\n");
           setState(() {
             // widget.alertYawningText = "Driver is Yawning";

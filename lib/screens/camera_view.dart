@@ -124,8 +124,7 @@ class _CameraViewState extends State<CameraView> {
           ),
           Align(
             alignment: Alignment.center,
-            child: _body(),
-
+            child: ClipOval(child: _liveBody()),
           ),
         ],
       ),
@@ -166,34 +165,22 @@ class _CameraViewState extends State<CameraView> {
     });
   }
 
-  Widget _body() {
-    Widget body;
-    body = _liveBody();
-    return body;
-  }
-
   Widget _liveBody() {
     if (_controller?.value.isInitialized == false) {
-      return Container();
+      return Container(
+          child: CircularProgressIndicator(
+        strokeWidth: 4.0,
+        color: Colors.red,
+      ));
     }
-    final size = MediaQuery.of(context).size;
-    var scale = size.aspectRatio * _controller!.value.aspectRatio;
-    if (scale < 1) scale = 1 / scale;
     return Container(
+      height: MediaQuery.of(context).size.height / 3,
+      width: MediaQuery.of(context).size.width * 0.5,
       color: Colors.black,
       child: Stack(
         fit: StackFit.expand,
-        children: [
-          Transform.scale(
-            scale: scale,
-            child: Center(
-              child: _chagingCameraLens
-                  ? const Center(
-                      child: Text("Changing camera lens"),
-                    )
-                  : CameraPreview(_controller!),
-            ),
-          ),
+        children: <Widget>[
+          CameraPreview(_controller!),
           if (widget.customPaint != null) widget.customPaint!
         ],
       ),
