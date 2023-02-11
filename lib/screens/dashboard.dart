@@ -1,9 +1,12 @@
+
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_sms/flutter_sms.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../firebase/firebase_manager.dart';
 import 'camera_page.dart';
@@ -34,7 +37,10 @@ class Dashboard extends StatelessWidget {
                     onPressed: () => call(context), child: Text('Call')),
                 ElevatedButton(
                     onPressed: () { _sendSMS(message, recipients);}, child: Text('Location')),
+                ElevatedButton(
+                    onPressed: () { playSound(context);}, child: Text('sound')),
               ],
+
             ),
           ),
         ),
@@ -44,6 +50,8 @@ class Dashboard extends StatelessWidget {
                 context, MaterialPageRoute(builder: (context) => CameraPage()));
           },
         ));
+    
+
   }
 
   signOut(BuildContext context) {
@@ -75,4 +83,20 @@ class Dashboard extends StatelessWidget {
     });
     print(_result);
   }
+
+  void playSound(BuildContext context){
+    final player = AudioPlayer();
+    player.play(AssetSource('myalarm.mp3'));
+    QuickAlert.show(context: context,
+        type: QuickAlertType.warning,
+        onConfirmBtnTap: (){
+          player.stop();
+          Navigator.pop(context);
+        });
+
+
+  }
+
+   
+
 }
