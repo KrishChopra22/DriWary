@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_sms/flutter_sms.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:quickalert/quickalert.dart';
 
@@ -23,6 +24,7 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 'Dashboard',
@@ -36,7 +38,7 @@ class Dashboard extends StatelessWidget {
                 child: Icon(
                   Icons.logout_outlined,
                   color: Colors.white,
-                  size: 10,
+                  size: 80,
                 ),
               ),
             ],
@@ -68,28 +70,59 @@ class Dashboard extends StatelessWidget {
                 //     child: const Text('SignOut')),
                 const Text("Hello"),
                 Text(auth.currentUser!.uid),
-                ElevatedButton(
-                    onPressed: () => call(context), child: const Text('Call')),
-                ElevatedButton(
-                    onPressed: () {
-                      _sendSMS(message, recipients);
-                    },
-                    child: const Text('Location')),
-                ElevatedButton(
-                    onPressed: () {
-                      playSound(context);
-                    },
-                    child: const Text('sound')),
-                ElevatedButton(
-                    onPressed: () => _sendSMS(message, recipients),
-                    child: const Text('SMS')),
-                FloatingActionButton(
-                  onPressed: () {
+                // ElevatedButton(
+                //     onPressed: () => call(context), child: const Text('Call')),
+                // ElevatedButton(
+                //     onPressed: () {
+                //       _sendSMS(message, recipients);
+                //     },
+                //     child: const Text('Location')),
+                // ElevatedButton(
+                //     onPressed: () {
+                //       playSound(context);
+                //     },
+                //     child: const Text('sound')),
+
+                // ElevatedButton(
+                //     onPressed: () => popup(context),
+                //     child: const Text('PopUP')),
+                // ElevatedButton(
+                //     onPressed: () => _sendSMS(message, recipients),
+                //     child: const Text('SMS')),
+                // FloatingActionButton(
+                //   onPressed: () {
+                //     Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => const DriveDetails()));
+                //   },
+                // ),
+                InkWell(
+                  onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const DriveDetails()));
                   },
+                  child: Container(
+                    child: Text('Start Drive',
+                    style: TextStyle(
+                      color: Colors.white, fontSize: 20
+                    ),),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Color(0xff13132d),
+                        border: GradientBoxBorder(
+                            gradient:LinearGradient(
+                                colors: [
+                                  Color(0xff13132d),
+                                  Colors.white
+                                ]
+                            )
+                        )
+                    ),
+                  ),
                 ),
               ],
             ),
