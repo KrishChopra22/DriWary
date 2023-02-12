@@ -222,9 +222,9 @@ class _CameraViewState extends State<CameraView> {
 
   Widget buildButtons(){
     final isRunning = timer == null ? false: timer!.isActive;
-    final isCompleted = seconds == 60;
+    final isCompleted = seconds == minSeconds ||  seconds == 60;
 
-    return isRunning?Row(
+    return isRunning || !isCompleted ?Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ButtonWidget(text: isRunning ? 'Pause' : 'Resume', onClicked: (){
