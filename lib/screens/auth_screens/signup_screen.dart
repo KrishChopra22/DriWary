@@ -55,7 +55,7 @@ class SignupScreen extends StatelessWidget {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: TextFormField (
                         style: TextStyle(color: Colors.white),
                         keyboardType: TextInputType.emailAddress,
@@ -95,7 +95,7 @@ class SignupScreen extends StatelessWidget {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: TextFormField(
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
@@ -135,7 +135,7 @@ class SignupScreen extends StatelessWidget {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: TextFormField (
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
@@ -175,7 +175,7 @@ class SignupScreen extends StatelessWidget {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: TextFormField (
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
@@ -216,7 +216,7 @@ class SignupScreen extends StatelessWidget {
 
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: TextFormField (
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
