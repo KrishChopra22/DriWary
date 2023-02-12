@@ -81,9 +81,6 @@ class Dashboard extends StatelessWidget {
                     },
                     child: const Text('sound')),
                 ElevatedButton(
-                    onPressed: () => popup(context),
-                    child: const Text('PopUP')),
-                ElevatedButton(
                     onPressed: () => _sendSMS(message, recipients),
                     child: const Text('SMS')),
                 FloatingActionButton(
