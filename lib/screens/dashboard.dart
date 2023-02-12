@@ -24,7 +24,7 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Dashboard',
@@ -38,7 +38,7 @@ class Dashboard extends StatelessWidget {
                 child: Icon(
                   Icons.logout_outlined,
                   color: Colors.white,
-                  size: 80,
+                  size: 30,
                 ),
               ),
             ],
@@ -47,95 +47,102 @@ class Dashboard extends StatelessWidget {
           backgroundColor: Color(0xff14122a),
         ),
         backgroundColor: Color(0xff14122a),
-        body: Padding(
-          padding: const EdgeInsets.all(100.0),
-          child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-              colors: [
-                Color(0xff14122a),
-                Color(0xff13132d),
-                Color(0xff13132f),
-                Color(0xff1b1a3c),
-              ],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-            )),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // ElevatedButton(
-                //     onPressed: () => signOut(context),
-                //     child: const Text('SignOut')),
-                const Text("Hello"),
-                Text(auth.currentUser!.uid),
-                // ElevatedButton(
-                //     onPressed: () => call(context), child: const Text('Call')),
-                // ElevatedButton(
-                //     onPressed: () {
-                //       _sendSMS(message, recipients);
-                //     },
-                //     child: const Text('Location')),
-                // ElevatedButton(
-                //     onPressed: () {
-                //       playSound(context);
-                //     },
-                //     child: const Text('sound')),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Center(
+              child: Container(
+                width: 400,
+                padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    colors: [
+                      Color(0xff14122a),
+                      Color(0xff13132d),
+                      Color(0xff13132f),
+                      Color(0xff1b1a3c),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // ElevatedButton(
+                      //     onPressed: () => signOut(context),
+                      //     child: const Text('SignOut')),
+                      const Text("Hello"),
+                      Text(auth.currentUser!.uid),
+                      // ElevatedButton(
+                      //     onPressed: () => call(context), child: const Text('Call')),
+                      // ElevatedButton(
+                      //     onPressed: () {
+                      //       _sendSMS(message, recipients);
+                      //     },
+                      //     child: const Text('Location')),
+                      // ElevatedButton(
+                      //     onPressed: () {
+                      //       playSound(context);
+                      //     },
+                      //     child: const Text('sound')),
 
-                // ElevatedButton(
-                //     onPressed: () => popup(context),
-                //     child: const Text('PopUP')),
-                // ElevatedButton(
-                //     onPressed: () => _sendSMS(message, recipients),
-                //     child: const Text('SMS')),
-                // FloatingActionButton(
-                //   onPressed: () {
-                //     Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //             builder: (context) => const DriveDetails()));
-                //   },
-                // ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const DriveDetails()));
-                  },
-                  child: Container(
-                    child: Text('Start Drive',
-                    style: TextStyle(
-                      color: Colors.white, fontSize: 20
-                    ),),
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Color(0xff13132d),
-                        border: GradientBoxBorder(
-                            gradient:LinearGradient(
-                                colors: [
-                                  Color(0xff13132d),
-                                  Colors.white
-                                ]
-                            )
-                        )
-                    ),
+                      // ElevatedButton(
+                      //     onPressed: () => popup(context),
+                      //     child: const Text('PopUP')),
+                      // ElevatedButton(
+                      //     onPressed: () => _sendSMS(message, recipients),
+                      //     child: const Text('SMS')),
+                      // FloatingActionButton(
+                      //   onPressed: () {
+                      //     Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) => const DriveDetails()));
+                      //   },
+                      // ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const DriveDetails()));
+                        },
+                        child: Container(
+                          child: Text('Start Drive',
+                          style: TextStyle(
+                            color: Colors.white, fontSize: 20
+                          ),),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              color: Color(0xff13132d),
+                              border: GradientBoxBorder(
+                                  gradient:LinearGradient(
+                                      colors: [
+                                        Color(0xff13132d),
+                                        Colors.white
+                                      ]
+                                  )
+                              )
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const FaceDetectorPage()));
-          },
-        ));
+        
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //             builder: (context) => const FaceDetectorPage()));
+        //   },
+        // )
+    );
   }
 
   signOut(BuildContext context) {

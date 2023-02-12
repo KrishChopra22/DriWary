@@ -123,7 +123,10 @@ class _CameraViewState extends State<CameraView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Color(0xff14122a),
+          title: Text(widget.title)),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
