@@ -14,8 +14,6 @@ class Driving extends StatefulWidget {
 
 class _DrivingState extends State<Driving> {
 
-  // Position? _currentUserPosition;
-  // double? distanceInMeter =0.0;
 
   bool _isLoading = true;
 
@@ -43,13 +41,6 @@ class _DrivingState extends State<Driving> {
     return Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
-
-
-
-  // Future _getTheDistance() async{
-  //   _currentUserPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  //   print(_currentUserPosition!.latitude);
-  // }
 
   @override
   void initState() {
@@ -95,14 +86,6 @@ class _DrivingState extends State<Driving> {
                       Position position = await _determinePosition();
                       print(position.latitude);
                       print(position.longitude);
-
-                      // location = 'Lat: ${position.latitude}, Long: ${position.longitude}';
-                      // setState(() {
-
-
-                      //
-                      // });
-
                       final periodicTimer = Timer.periodic(
                           const Duration(seconds: 5),
                               (timer) {
@@ -114,8 +97,6 @@ class _DrivingState extends State<Driving> {
                     },
 
                     child: Text("Get location"))
-
-
               ]
           )
 

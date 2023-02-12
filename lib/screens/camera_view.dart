@@ -3,6 +3,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'buttonWidget.dart';
+import 'dart:async';
 
 class CameraView extends StatefulWidget {
   final String title;
@@ -11,7 +13,9 @@ class CameraView extends StatefulWidget {
   final Function(InputImage inputImage) onImage;
   final CameraLensDirection initialDirection;
 
-  const CameraView({
+
+
+  CameraView({
     Key? key,
     required this.title,
     required this.onImage,
@@ -20,11 +24,22 @@ class CameraView extends StatefulWidget {
     this.text,
   }) : super(key: key);
 
+
+
+
   @override
   State<CameraView> createState() => _CameraViewState();
 }
 
 class _CameraViewState extends State<CameraView> {
+
+
+  static const maxSeconds = 60;
+  static const minSeconds = 0;
+  int seconds = minSeconds;
+  Timer? timer;
+
+  void resetTimer() => setState(() => seconds = minSeconds);
   CameraController? _controller;
   int _cameraIndex = 0;
   bool _chagingCameraLens = false;
@@ -126,6 +141,15 @@ class _CameraViewState extends State<CameraView> {
             alignment: Alignment.center,
             child: ClipOval(child: _liveBody()),
           ),
+          SizedBox(height:20,),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildTimer(),
+              const SizedBox(height:30),
+              buildButtons()
+            ],
+          ),
         ],
       ),
       floatingActionButton: _floatingActionButton(),
@@ -192,4 +216,83 @@ class _CameraViewState extends State<CameraView> {
     await _controller?.dispose();
     _controller = null;
   }
+
+  Widget buildButtons(){
+    final isRunning = timer == null ? false: timer!.isActive;
+    final isCompleted = seconds == 60;
+
+    return isRunning?Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ButtonWidget(text: isRunning ? 'Pause' : 'Resume', onClicked: (){
+          if(isRunning){
+            stopTimer(reset: false);
+          }
+          else{
+            startTimer(reset: false);
+          }
+        },),
+        const SizedBox(width:12),
+        ButtonWidget(
+            text: 'Cancel',
+            onClicked: stopTimer)
+      ],
+    )
+        : ButtonWidget(
+      text: "Start",
+      onClicked: (){
+        startTimer();
+      },
+    );
+  }
+
+  Widget buildTimer() => SizedBox(
+    width: 200,
+    height: 200,
+    child: Stack(
+      fit: StackFit.expand,
+      children: [
+        CircularProgressIndicator(
+          value: 1-seconds/maxSeconds,
+          valueColor: AlwaysStoppedAnimation(Colors.red),
+          strokeWidth: 12,
+          backgroundColor: Colors.white,
+        ),
+        Center(child:buildTime()),
+      ],
+    ),
+  );
+
+  Widget buildTime(){
+    return Text(
+        '$seconds',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.blue,
+          fontSize: 80,
+        )
+    );
+  }
+
+  void startTimer({bool reset = true}) {
+    if(reset){
+      resetTimer();
+    }
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
+      if(seconds < 7200){
+        setState(() => seconds++);
+      } else{
+        stopTimer(reset: false);
+      }
+    });
+  }
+
+  void stopTimer({bool reset = true}) {
+    if(reset){
+      resetTimer();
+    }
+    setState(() => timer?.cancel());
+  }
+
 }
+
