@@ -255,6 +255,7 @@ class SignupScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
+                        keyboardType: TextInputType.phone,
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
                         controller: ecPhone1Controller,
@@ -271,7 +272,7 @@ class SignupScreen extends StatelessWidget {
                             ),
                             width: 5,
                           ),
-                          labelText: "Emergency Contact ",
+                          labelText: "Emergency Contact 1",
                           labelStyle: TextStyle(color: Colors.white),
                           focusedBorder: GradientOutlineInputBorder(
                               gradient: LinearGradient(
@@ -283,7 +284,7 @@ class SignupScreen extends StatelessWidget {
                               ),
                               width: 5
                           ),
-                          hintText: "Name",
+                          hintText: "Emergency Contact 1",
                           hintStyle: TextStyle(color: Colors.white70),
                         ),
                       ),
@@ -291,6 +292,7 @@ class SignupScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
+                        keyboardType: TextInputType.phone,
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
                         controller: ecPhone2Controller,
@@ -307,7 +309,7 @@ class SignupScreen extends StatelessWidget {
                             ),
                             width: 5,
                           ),
-                          labelText: "Emergency Contact ",
+                          labelText: "Emergency Contact 2",
                           labelStyle: TextStyle(color: Colors.white),
                           focusedBorder: GradientOutlineInputBorder(
                               gradient: LinearGradient(
