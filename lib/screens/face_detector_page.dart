@@ -83,7 +83,7 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
             // widget.alertSleepingText = "Driver is feeling drowsy";
             drowsyCount = drowsyCount + 1;
           });
-          if (drowsyCount > 8) {
+          if (drowsyCount > 6) {
             setState(() {
               alarmCount = alarmCount + 1;
             });
