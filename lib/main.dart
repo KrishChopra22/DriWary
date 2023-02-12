@@ -15,7 +15,7 @@ Future<void> main() async {
   cameras = await availableCameras();
   await Permission.camera.request();
   await Permission.microphone.request();
-  await Permission.locationWhenInUse.request();
+  await Permission.location.request();
   await Permission.audio.request();
   await Permission.notification.request();
   await Permission.sms.request();
