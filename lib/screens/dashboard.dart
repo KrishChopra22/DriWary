@@ -1,6 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:exception/screens/DriveDetails.dart';
-import 'package:exception/screens/drive_mode.dart';
+import 'package:exception/screens/face_detector_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
@@ -21,37 +21,44 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            Text('Dashboard',style: TextStyle(
-                color: Colors.white,fontSize: 24,fontWeight: FontWeight.w600),),
-            InkWell(
-              onTap: () => signOut(context),
-              child: Icon(Icons.logout_outlined,color: Colors.white,size: 10,),
-            ),
-          ],
+        appBar: AppBar(
+          title: Row(
+            children: [
+              Text(
+                'Dashboard',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600),
+              ),
+              InkWell(
+                onTap: () => signOut(context),
+                child: Icon(
+                  Icons.logout_outlined,
+                  color: Colors.white,
+                  size: 10,
+                ),
+              ),
+            ],
+          ),
+          elevation: 0,
+          backgroundColor: Color(0xff14122a),
         ),
-        elevation: 0,
-        backgroundColor: Color(0xff14122a),
-
-      ),
         backgroundColor: Color(0xff14122a),
         body: Padding(
           padding: const EdgeInsets.all(100.0),
           child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xff14122a),
-                  Color(0xff13132d),
-                  Color(0xff13132f),
-                  Color(0xff1b1a3c),
-                ],
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-              )
-            ),
+                gradient: LinearGradient(
+              colors: [
+                Color(0xff14122a),
+                Color(0xff13132d),
+                Color(0xff13132f),
+                Color(0xff1b1a3c),
+              ],
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+            )),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,9 +81,6 @@ class Dashboard extends StatelessWidget {
                     },
                     child: const Text('sound')),
                 ElevatedButton(
-                    onPressed: () => popup(context),
-                    child: const Text('PopUP')),
-                ElevatedButton(
                     onPressed: () => _sendSMS(message, recipients),
                     child: const Text('SMS')),
                 FloatingActionButton(
@@ -93,8 +97,10 @@ class Dashboard extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const DriveModePage()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const FaceDetectorPage()));
           },
         ));
   }
@@ -110,18 +116,18 @@ class Dashboard extends StatelessWidget {
     state.pushNamedAndRemoveUntil('camera', (Route route) => false);
   }
 
-  call(BuildContext context) {
+  static call(BuildContext context) {
     FlutterPhoneDirectCaller.callNumber("+916261934855");
   }
 
-  location(BuildContext context) async {
+  static location(BuildContext context) async {
     print("LOC");
     await Permission.location.serviceStatus.isEnabled;
     print(Permission.location.serviceStatus.isEnabled);
     _sendSMS(message, recipients);
   }
 
-  void _sendSMS(String message, List<String> recipients) async {
+  static void _sendSMS(String message, List<String> recipients) async {
     String _result = await sendSMS(
             message: message, recipients: recipients, sendDirect: true)
         .catchError((onError) {
@@ -130,7 +136,7 @@ class Dashboard extends StatelessWidget {
     print(_result);
   }
 
-  void playSound(BuildContext context) {
+  static void playSound(BuildContext context) {
     final player = AudioPlayer();
     player.play(AssetSource('alarm.mpeg'));
     QuickAlert.show(

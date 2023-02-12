@@ -1,3 +1,4 @@
+import 'package:exception/screens/dashboard.dart';
 import 'package:exception/utils/face_detector_painter.dart';
 
 import 'camera_view.dart';
@@ -81,13 +82,10 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
             setState(() {
               alarmCount = alarmCount + 1;
             });
-            // });
-            //play alarm sound until driver stops it
-            // if driver stops the alarm
+            Dashboard.playSound(context);
             print(" ALARM !!!    WAKE UP DUDE...");
             //drowsy count is set back to 0
             if (alarmCount > 2) {
-              // SEND SMS/CALL
               setState(() {
                 alarmCount = 0;
               });
@@ -95,7 +93,8 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
 
             //maintain alramCount,    if alarm is played more than 2 times,   send sms/call
           }
-        } else {
+        }
+        if (drowsyCount > 8) {
           setState(() {
             drowsyCount = 0;
             // widget.alertSleepingText = "Driver is not feeling drowsy";
@@ -114,6 +113,7 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
           });
 
           if (yawningCount > 5) {
+            Dashboard.playSound(context);
             setState(() {
               alarmCount = alarmCount + 1;
             });
@@ -129,7 +129,8 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
 
             //maintain alramCount,    if alarm is played more than 2 times,   send sms/call
           }
-        } else {
+        }
+        if (yawningCount > 5) {
           setState(() {
             yawningCount = 0;
             // widget.alertYawningText = "Driver is not yawning";
