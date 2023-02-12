@@ -12,6 +12,7 @@ class Person{
   late String email;
   late String phone;
   late String uid;
+  late String age;
   late List<String>? emergencyContact;
   // Person(
   //     {
@@ -24,16 +25,11 @@ class Person{
   //     );
 
   void fromJson(Map<String?, dynamic> json) {
-     // return Person(
-     //   name : json['name'],
-     //   email : json['email'],
-     //   phone : json['phone'],
-     //   uid : json['uid'],
-     // );
      name = json['name'];
      phone = json['phone'];
      email = json['email'];
      uid = json['uid'];
+     age = json['age'];
      emergencyContact = json['emergencyContact'];
   }
 
@@ -43,13 +39,8 @@ class Person{
         'email': email,
         'phone': phone,
         'uid': uid,
+        'age': age,
         'emergencyContact' : emergencyContact,
       };
-
-  Future<void> addGroup(Person p) async {
-    p.emergencyContact?.add(this as String);
-    await database.ref('Users/${auth.currentUser?.uid}').update(toJson());
-    print("User Upated");
-  }
 
 }

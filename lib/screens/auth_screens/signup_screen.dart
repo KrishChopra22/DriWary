@@ -10,7 +10,9 @@ import '../../utils/auth_utils.dart';
 
 class SignupScreen extends StatelessWidget {
   final String args;
+
   SignupScreen({super.key, required this.args});
+
   final FirebaseAuth auth = FirebaseManager.auth;
   final FirebaseDatabase database = FirebaseManager.database;
   final TextEditingController emailController = TextEditingController();
@@ -49,19 +51,20 @@ class SignupScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    Text('SignUp',style: TextStyle(color: Colors.white,fontSize: 28),),
+                    Text('SignUp',
+                      style: TextStyle(color: Colors.white, fontSize: 28),),
                     const SizedBox(
                       height: 30,
                     ),
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: TextFormField (
+                      child: TextFormField(
                         style: TextStyle(color: Colors.white),
                         keyboardType: TextInputType.emailAddress,
                         controller: emailController,
                         decoration: InputDecoration(
-                          border:  GradientOutlineInputBorder(
+                          border: GradientOutlineInputBorder(
                             gradient: LinearGradient(
                               colors: [
                                 Colors.white,
@@ -101,7 +104,7 @@ class SignupScreen extends StatelessWidget {
                         cursorColor: Colors.white,
                         controller: nameController,
                         decoration: InputDecoration(
-                          border:  GradientOutlineInputBorder(
+                          border: GradientOutlineInputBorder(
                             gradient: LinearGradient(
                               colors: [
                                 Colors.white,
@@ -136,12 +139,12 @@ class SignupScreen extends StatelessWidget {
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: TextFormField (
+                      child: TextFormField(
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
                         controller: dobController,
                         decoration: InputDecoration(
-                          border:  GradientOutlineInputBorder(
+                          border: GradientOutlineInputBorder(
                             gradient: LinearGradient(
                               colors: [
                                 Colors.white,
@@ -176,12 +179,12 @@ class SignupScreen extends StatelessWidget {
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: TextFormField (
+                      child: TextFormField(
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
                         controller: genderController,
                         decoration: InputDecoration(
-                          border:  GradientOutlineInputBorder(
+                          border: GradientOutlineInputBorder(
                             gradient: LinearGradient(
                               colors: [
                                 Colors.white,
@@ -217,12 +220,12 @@ class SignupScreen extends StatelessWidget {
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: TextFormField (
+                      child: TextFormField(
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
                         controller: passwordController,
                         decoration: InputDecoration(
-                          border:  GradientOutlineInputBorder(
+                          border: GradientOutlineInputBorder(
                             gradient: LinearGradient(
                               colors: [
                                 Colors.white,
@@ -251,6 +254,10 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -260,7 +267,7 @@ class SignupScreen extends StatelessWidget {
                         cursorColor: Colors.white,
                         controller: ecPhone1Controller,
                         decoration: InputDecoration(
-                          border:  GradientOutlineInputBorder(
+                          border: GradientOutlineInputBorder(
                             gradient: LinearGradient(
                               colors: [
                                 Colors.white,
@@ -289,6 +296,10 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
@@ -297,7 +308,7 @@ class SignupScreen extends StatelessWidget {
                         cursorColor: Colors.white,
                         controller: ecPhone2Controller,
                         decoration: InputDecoration(
-                          border:  GradientOutlineInputBorder(
+                          border: GradientOutlineInputBorder(
                             gradient: LinearGradient(
                               colors: [
                                 Colors.white,
@@ -330,7 +341,7 @@ class SignupScreen extends StatelessWidget {
                       height: 30,
                     ),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         signup(context);
                       },
                       child: Container(
@@ -340,7 +351,7 @@ class SignupScreen extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             color: Color(0xff13132d),
                             border: GradientBoxBorder(
-                                gradient:LinearGradient(
+                                gradient: LinearGradient(
                                     colors: [
                                       Color(0xff13132d),
                                       Colors.white
@@ -348,7 +359,9 @@ class SignupScreen extends StatelessWidget {
                                 )
                             )
                         ),
-                        child: Text('SignUp',style: TextStyle(color: Colors.white,fontSize: 18),textAlign: TextAlign.center,),
+                        child: Text('SignUp', style: TextStyle(color: Colors
+                            .white, fontSize: 18),
+                          textAlign: TextAlign.center,),
                       ),
                     ),
 
@@ -367,15 +380,14 @@ class SignupScreen extends StatelessWidget {
     print("Sign-Up");
 
     NavigatorState state = Navigator.of(context);
-    try{
-
+    try {
       // Make User from the inbuilt func of Firebase
       final credentials = await auth.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
 
-      List<String>? ecList= [ecPhone1Controller.text,ecPhone2Controller.text];
+      List<String>? ecList = [ecPhone1Controller.text, ecPhone2Controller.text];
       // Make object of dataclass and push on DB
       Person person = Person();
       Map<String, dynamic> personJson = {};
@@ -395,7 +407,6 @@ class SignupScreen extends StatelessWidget {
       //Goto Home
       state.pushNamedAndRemoveUntil('home', (Route route) => false);
       print("Redirected to HomePage");
-
     }
     on FirebaseAuthException catch (e) {
       print('Error Found');
@@ -431,85 +442,4 @@ class SignupScreen extends StatelessWidget {
       );
     }
   }
-  // signup(BuildContext context) async {
-  //   print("Sign-Up");
-  //
-  //   NavigatorState state = Navigator.of(context);
-  //   try{
-  //
-  //   // Make User from the inbuilt func of Firebase
-  //   final credentials = await auth.createUserWithEmailAndPassword(
-  //     email: emailController.text,
-  //     password: passwordController.text,
-  //   );
-  //   print("Args");
-  //   print(args);
-  //   print(credentials.user?.uid);
-  //
-  //   // Make object of dataclass and push on DB
-  //   Person person = Person();
-  //   Map<String, dynamic> personJson = {};
-  //   personJson['name'] = nameController.text;
-  //   personJson['uid'] = credentials.user?.uid??"";
-  //   personJson['email'] = emailController.text;
-  //   personJson['phone'] = args;
-  //   personJson['emergencyContact'] = ['0'];
-  //
-  //   print(personJson['phone']);
-  //   person.fromJson(personJson);
-  //   print("Person Object Created");
-  //   //Push on DB
-  //   AuthUtils.showLoadingDialog(context);
-  //   await database.ref('Users/${person.uid}').set(person.toJson());
-  //   print("Pushed in DB");
-  //
-  //   //Goto Home
-  //   state.pushNamedAndRemoveUntil('home', (Route route) => false);
-  //   print("Redirected to HomePage");
-  //
-  //   }
-  //   on FirebaseAuthException catch (e) {
-  //     print('Error Found');
-  //     if (e.code == 'weak-password') {
-  //       Fluttertoast.showToast(
-  //         backgroundColor: Colors.white,
-  //         textColor: Color(0xff13132d),
-  //         msg: "The password provided is too weak.",
-  //         toastLength: Toast.LENGTH_SHORT,
-  //         gravity: ToastGravity.BOTTOM,
-  //         timeInSecForIosWeb: 1,
-  //       );
-  //     }
-  //     else if (e.code == 'email-already-in-use') {
-  //       Fluttertoast.showToast(
-  //         backgroundColor: Colors.white,
-  //         textColor: Color(0xff13132d),
-  //         msg: "An account already exists for that email.",
-  //         toastLength: Toast.LENGTH_SHORT,
-  //         gravity: ToastGravity.BOTTOM,
-  //         timeInSecForIosWeb: 1,
-  //       );
-  //     }
-  //     else {
-  //       Fluttertoast.showToast(
-  //         backgroundColor: Colors.white,
-  //         textColor: Color(0xff13132d),
-  //         msg: "Invalid details",
-  //         toastLength: Toast.LENGTH_SHORT,
-  //         gravity: ToastGravity.BOTTOM,
-  //         timeInSecForIosWeb: 1,
-  //       );
-  //     }
-  //   } catch (e) {
-  //     print(e.toString());
-  //     Fluttertoast.showToast(
-  //       backgroundColor: Colors.white,
-  //       textColor: Color(0xff13132d),
-  //       msg: 'Something is Wrong',
-  //       toastLength: Toast.LENGTH_SHORT,
-  //       gravity: ToastGravity.BOTTOM,
-  //       timeInSecForIosWeb: 1,
-  //     );
-  //   }
-  // }
 }

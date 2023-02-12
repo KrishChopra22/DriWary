@@ -28,7 +28,7 @@ Future<void> main() async {
 Future<void> checkUser() async {
   if (FirebaseManager.auth.currentUser != null) {
     final snapshot = await FirebaseManager.database
-        .ref('Users/${FirebaseManager.auth.currentUser!.uid}')
+        .ref('Users')
         .get();
     print(snapshot.value);
     if (!snapshot.exists) {

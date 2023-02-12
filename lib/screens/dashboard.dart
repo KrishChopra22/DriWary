@@ -71,8 +71,17 @@ class Dashboard extends StatelessWidget {
                       // ElevatedButton(
                       //     onPressed: () => signOut(context),
                       //     child: const Text('SignOut')),
-                      const Text("Hello"),
-                      Text(auth.currentUser!.uid),
+                      Text("Hello! ",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )),
+                      const SizedBox(
+                        height: 30,
+                      ),
+
+
                       // ElevatedButton(
                       //     onPressed: () => call(context), child: const Text('Call')),
                       // ElevatedButton(
