@@ -56,7 +56,7 @@ class _verifyOtpState extends State<verifyOtp> {
                   height: 30,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: TextFormField(
                     style: TextStyle(color: Colors.white),
                     cursorColor: Colors.white,
@@ -115,9 +115,10 @@ class _verifyOtpState extends State<verifyOtp> {
                           )
                       )
                   ),
+
                   child: Text('Verify',style: TextStyle(color: Colors.white,fontSize: 18),textAlign: TextAlign.center,),
                 ),
-                )
+                ),
               ],
             ),
           ),
