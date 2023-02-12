@@ -53,6 +53,8 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
     );
   }
 
+
+
   Future<void> processImage(final InputImage inputImage) async {
     if (!_canProcess) return;
     if (_isBusy) return;
