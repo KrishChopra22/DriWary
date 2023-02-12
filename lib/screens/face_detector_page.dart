@@ -1,5 +1,8 @@
 import 'package:exception/screens/dashboard.dart';
 import 'package:exception/utils/face_detector_painter.dart';
+import 'package:flutter_sms/flutter_sms.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'camera_view.dart';
 import 'package:camera/camera.dart';
@@ -83,18 +86,26 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
               alarmCount = alarmCount + 1;
             });
             Dashboard.playSound(context);
+            print(alarmCount);
+            drowsyCount = 0;
             print(" ALARM !!!    WAKE UP DUDE...");
             //drowsy count is set back to 0
-            if (alarmCount > 2) {
+            if (alarmCount > 2 && alarmCount <= 4) {
+              getLatLong();
+              print("send");
+              // SEND SMS
+            }
+            if(alarmCount > 4){
+              Dashboard.call(context);
               setState(() {
                 alarmCount = 0;
               });
             }
 
-            //maintain alramCount,    if alarm is played more than 2 times,   send sms/call
+            //maintain alarmCount,    if alarm is played more than 2 times,   send sms/call
           }
         }
-        if (drowsyCount > 8) {
+        else {
           setState(() {
             drowsyCount = 0;
             // widget.alertSleepingText = "Driver is not feeling drowsy";
@@ -114,14 +125,21 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
 
           if (yawningCount > 5) {
             Dashboard.playSound(context);
+            // getLatLong();
+            yawningCount = 0;
             setState(() {
               alarmCount = alarmCount + 1;
             });
             //play alarm sound until driver stops it
             // if driver stops the alarm, yawning count is set back to 0
             print(" ALARM !!!    WAKE UP DUDE...");
-            if (alarmCount > 2) {
-              // SEND SMS/CALL
+            if (alarmCount > 2 && alarmCount <= 4) {
+              getLatLong();
+              print("send");
+              // SEND SMS
+            }
+            if(alarmCount > 4){
+              Dashboard.call(context);
               setState(() {
                 alarmCount = 0;
               });
@@ -130,7 +148,7 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
             //maintain alramCount,    if alarm is played more than 2 times,   send sms/call
           }
         }
-        if (yawningCount > 5) {
+        else {
           setState(() {
             yawningCount = 0;
             // widget.alertYawningText = "Driver is not yawning";
@@ -151,4 +169,98 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
       setState(() {});
     }
   }
+
+  double? lat;
+
+  double? long;
+
+  String address = "";
+
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
+
+  getLatLong() {
+    Future<Position> data = _determinePosition();
+    data.then((value) {
+      print("value $value");
+      setState(() {
+        lat = value.latitude;
+        long = value.longitude;
+      });
+
+      getAddress(value.latitude, value.longitude);
+    }).catchError((error) {
+      print("Error $error");
+    });
+
+
+  }
+
+//For convert lat long to address
+  getAddress(lat, long) async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
+    setState(() {
+      address = placemarks[0].street! +
+          ", " +
+          placemarks[0].subAdministrativeArea! +
+          ", " +
+          placemarks[0].administrativeArea!;
+    });
+
+    for (int i = 0; i < placemarks.length; i++) {
+      print("INDEX $i ${placemarks[i]}");
+    }
+    print(address);
+    String message =
+        "This person is feeling drowsy and their current location is: " +
+            " " +
+            address;
+    List<String> recipients = ["+919425253909", "8720068368", "8319499826", "9669215218"];
+    _sendSMS(message, recipients);
+  }
+
+  void _sendSMS(String message, List<String> recipients) async {
+    String _result = await sendSMS(
+        message: message, recipients: recipients, sendDirect: true)
+        .catchError((onError) {
+      print(onError);
+    });
+    print(_result);
+  }
 }
+
