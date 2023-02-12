@@ -22,10 +22,19 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard',style: TextStyle(
-            color: Colors.white,fontSize: 24,fontWeight: FontWeight.w600),),
+        title: Row(
+          children: [
+            Text('Dashboard',style: TextStyle(
+                color: Colors.white,fontSize: 24,fontWeight: FontWeight.w600),),
+            InkWell(
+              onTap: () => signOut(context),
+              child: Icon(Icons.logout_outlined,color: Colors.white,size: 10,),
+            ),
+          ],
+        ),
         elevation: 0,
         backgroundColor: Color(0xff14122a),
+
       ),
         backgroundColor: Color(0xff14122a),
         body: Padding(
@@ -47,9 +56,9 @@ class Dashboard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ElevatedButton(
-                    onPressed: () => signOut(context),
-                    child: const Text('SignOut')),
+                // ElevatedButton(
+                //     onPressed: () => signOut(context),
+                //     child: const Text('SignOut')),
                 const Text("Hello"),
                 Text(auth.currentUser!.uid),
                 ElevatedButton(
